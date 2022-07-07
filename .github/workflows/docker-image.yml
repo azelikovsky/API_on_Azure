@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Image Build
 
 on:
   push:
@@ -19,5 +19,33 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file Dockerfile.dockerfile --tag '${{env.DOCKER_IMAGE_NAME}}':latest
+      
+    - name: Docker login
+      run: docker login --username '${{secrets.DOCKER_USERNAME}}' --password '${{secrets.DOCKER_PASSWORD}}'
+      
+    - name: Tag the Docker image
+      run: docker tag '${{env.DOCKER_IMAGE_NAME}}':latest '${{secrets.DOCKER_USERNAME}}'/'${{env.DOCKER_IMAGE_NAME}}':latest
+      
+    - name: Push the Docker image
+      run: docker push '${{secrets.DOCKER_USERNAME}}'/'${{env.DOCKER_IMAGE_NAME}}':latest
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
       
