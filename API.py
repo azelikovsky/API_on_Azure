@@ -98,6 +98,12 @@ Categories_table = Table('Categories', metadata, autoload=True, autoload_with=en
 #Creation of global session variable.
 Global_Scoped_Session = scoped_session(sessionmaker(bind=engine))
 
+#API endpoint for homepage.
+
+@app.route('/')
+def homepage():
+    return "This is the homepage."
+
 #API endpoint for all authors.
 
 @app.route('/authors')
