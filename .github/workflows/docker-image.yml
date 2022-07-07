@@ -8,6 +8,7 @@ on:
 
 env:
   DOCKER_IMAGE_NAME: 'api_on_azure.azurecr.io'
+  AZURE_WEB_APP: 'APIonAzure2'
 
 jobs:
 
@@ -29,6 +30,17 @@ jobs:
     - name: Push the Docker image
       run: docker push '${{secrets.DOCKER_USERNAME}}'/'${{env.DOCKER_IMAGE_NAME}}':latest
       
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+        
+      
+    - name: Azure WebApp Deployment
+      uses: Azure/webapps-deploy@v2
+      with:
+        app-name: '${{env.AZURE_WEB_APP}}'
+        images: '${{secrets.DOCKER_USERNAME}}/${{env.DOCKER_IMAGE_NAME}}:latest'
       
       
       
